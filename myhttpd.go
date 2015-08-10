@@ -7,17 +7,10 @@ import "log"
 type httpHandler struct {
 }
 
-func handle_request(ch chan *UserRequest) {
-	ur := <-ch
-    ur.handle_request()
-}
-
 func (v httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
     ur := UserRequest{}
     ur.init(&w, r)
-	ch := make(chan *UserRequest)
-	go handle_request(ch)
-	ch <- &ur
+	ur.handle_request()
 }
 
 func start_httpd() {

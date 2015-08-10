@@ -30,8 +30,10 @@ func check_user_pass(userid string, passwd string) *user {
                     if strings.EqualFold(tokens[0],userid) && strings.EqualFold(strings.TrimSpace(tokens[1]),strings.TrimSpace(passwd)) { 
                         u := find_user(userid)
                         if u == nil {
-                            u = &user{userid,"",0}
+                            u = &user{}
+                            u.init(userid)
                             add_user(u)
+                            u.init_user()
                         }
                         u.incr_visit_cnt()
                         return u;
